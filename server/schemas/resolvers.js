@@ -7,7 +7,7 @@ const resolvers = {
         getSingleUser: async () => {
             return User.find().populate('books');
         },
-        book: async (parent, { _id }) => {
+        users: async (parent, { _id }) => {
             const params = _id ? { _id } : {};
             return User.find(params);
         },
