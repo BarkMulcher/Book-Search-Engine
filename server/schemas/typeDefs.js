@@ -1,24 +1,15 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-    # define the search parameters
-    input BookInput {
-        authors: String!
-        description: String!
-        bookId: String!
-        image: String!
-        link: String!
-        title: String!
-    }
     # define which fields are accessible from the Class model
     type Book {
-        _id: ID!
-        author: String!
-        description: String!
-        bookId: String!
-        image: String!
-        link: String!
-        title: String!
+        _id: ID
+        author: String
+        description: String
+        bookId: String
+        image: String
+        link: String
+        title: String
     }
     
     type User {
@@ -27,9 +18,16 @@ const typeDefs = gql`
         email: String!
         savedBooks: [Book]
     }
+
+    type Auth {
+        token: ID!
+        user: User
+    }
     
     type Query {
-        getSingleUser(id: String, username: String): [User]
+        getSingleUser(id: String, username: String): User
+        book: Book
+
     }
     
     type Mutation {
