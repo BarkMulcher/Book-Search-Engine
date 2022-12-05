@@ -32,7 +32,6 @@ export const CREATE_USER = gql`
         }
       }
     }
-  }
 `;
 
 export const SAVE_BOOK = gql`

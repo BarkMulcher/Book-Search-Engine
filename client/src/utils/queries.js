@@ -17,3 +17,15 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const SEARCH_BOOKS = gql`
+  query books {
+    books {
+      bookId
+      authors
+      description
+      image
+      link
+      title
+    }
+  }`
