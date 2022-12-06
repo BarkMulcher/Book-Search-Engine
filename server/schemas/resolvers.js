@@ -11,6 +11,9 @@ const resolvers = {
             const params = _id ? { _id } : {};
             return User.find(params);
         },
+        searchBooks: async () => {
+            return Book.find().populate('books');
+        }
     },
     Mutation: {
         createUser: async (parent, { username, email, password }) => {
