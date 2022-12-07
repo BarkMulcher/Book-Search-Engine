@@ -11,47 +11,87 @@ const SignupForm = () => {
     username: '', 
     email: '', 
     password: '' });
-  // set state for form validation
-  const [validated] = useState(false);
-  // set state for alert
-  const [showAlert, setShowAlert] = useState(false);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
-  };
+    // // set state for form validation
+// const [validated] = useState(false);
+// // set state for alert
+// const [showAlert, setShowAlert] = useState(false);
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+// const handleInputChange = (event) => {
+//   const { name, value } = event.target;
+//   setUserFormData({ ...userFormData, [name]: value });
+// };
 
-    // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+// const handleFormSubmit = async (event) => {
+//   event.preventDefault();
+
+//   // check if form has everything (as per react-bootstrap docs)
+//   const form = event.currentTarget;
+//   if (form.checkValidity() === false) {
+//     event.preventDefault();
+//     event.stopPropagation();
+//   }
+
+//   try {
+//     const response = await CREATE_USER(userFormData);
+
+//     if (!response.ok) {
+//       throw new Error('something went wrong!');
+//     }
+
+//     const { token, user } = await response.json();
+//     console.log(user);
+//     Auth.login(token);
+//   } catch (err) {
+//     console.error(err);
+//     setShowAlert(true);
+//   }
+
+//   setUserFormData({
+//     username: '',
+//     email: '',
+//     password: '',
+//   });
+// };
+    // set state for form validation
+    const [validated] = useState(false);
+
+    // set state for alert
+    const [showAlert, setShowAlert] = useState(false);
+
+    const [createUser, { error, data }] = useMutation(CREATE_USER);
+
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+
+      setUserFormData({
+        ...userFormData,
+        [name]: value,
+      });
+    };
+
+    const handleFormSubmit = async (event) => {
       event.preventDefault();
-      event.stopPropagation();
-    }
+      console.log(userFormData);
 
-    try {
-      const response = await CREATE_USER(userFormData);
+      try {
+        const { data } = await createUser({
+          variables: { ...userFormData },
+        });
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
+        Auth.login(data.createUser.token);
+      } catch (e) {
+        console.error(e);
       }
-
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    }
+    
 
     setUserFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
-  };
+          username: '',
+          email: '',
+          password: '',
+        });
+};
+  
 
   return (
     <>
@@ -112,3 +152,6 @@ const SignupForm = () => {
 };
 
 export default SignupForm;
+
+
+
