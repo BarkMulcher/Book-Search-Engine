@@ -19,16 +19,6 @@ export const CREATE_USER = gql`
       user {
         _id
         username
-        # email
-        # password
-        # don't think any of the following is necessary:
-        # savedBooks {
-        #   boodId
-        #   authors
-        #   description
-        #   title
-        #   image
-        #   link
         }
       }
     }
